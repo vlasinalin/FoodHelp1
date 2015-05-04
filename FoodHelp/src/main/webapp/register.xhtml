@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="head">
+            <script type="text/javascript">
+                function userTypeChanged (dropdown) {
+                    var sel = dropdown.options[dropdown.selectedIndex].value;
+                    var dud = document.getElementById('divPersonDetails');
+                    if (sel == "USER") {                
+                        dud.style.display = 'block';
+                    }
+                    else {
+                        dud.style.display = 'none';
+                    }
+                }
+
+            </script>
+        </ui:define>
+        <ui:define name="title">
+            Registration
+        </ui:define>
+        <ui:define name="body">
+            <br/>
+            <div style="text-align: center;">
+                <div class="divLogin">
+                    <h:outputLabel value="Registration" class="lblTitle" />
+                    <br /><br /><br />
+                    <h:form> 
+                        <h:panelGrid columns="2" columnClasses="inputLabel,inputText">
+                            <h:outputLabel value="#{bundle.CreateUserAccountLabel_username}" for="username" />
+                            <h:inputText id="username" value="#{userAccountController.selected.username}" title="#{bundle.CreateUserAccountTitle_username}" required="true" requiredMessage="#{bundle.CreateUserAccountRequiredMessage_username}"/>
+                            <h:outputLabel value="#{bundle.CreateUserAccountLabel_password}" for="password" />
+                            <h:inputSecret id="password" value="#{userAccountController.selected.password}" title="#{bundle.CreateUserAccountTitle_password}" required="true" requiredMessage="#{bundle.CreateUserAccountRequiredMessage_password}"/>
+                            <h:outputLabel value="Email:" for="userAccountId" />
+                            <h:inputText id="email" value="#{userAccountController.selected.email}" title="email" required="true" requiredMessage="Email is required"/>                  
+                            <h:outputLabel value="Full Name:" for="fullName" />
+                            <h:inputText id="fullName" value="#{userAccountController.userFullName}" title="fullName" required="true" requiredMessage="Full Name is required"/>                  
+                            <h:outputLabel value="User role:" for="userType" />
+                            <h:selectOneMenu id="userType" value="#{userAccountController.userGroup}" 
+                                             title="User Role" required="true" onchange="userTypeChanged(this);"
+                                             requiredMessage="User Role is required" >
+                                <f:selectItems value="#{userAccountController.itemsForSelectGroup}"/>
+                            </h:selectOneMenu>
+                        </h:panelGrid>
+                        <div id="divPersonDetails" style="display: none;">
+                        <h:panelGrid columns="2" columnClasses="inputLabel,inputText" >
+                            <h:outputLabel value="Age" for="age" />
+                            <h:inputText id="age" value="#{userAccountController.personAge}"
+                                         required="true" requiredMessage="Age is required" />
+                            <h:outputLabel value="Gender" for="gender" />
+                            <p:selectOneRadio id="options" value="#{userAccountController.personGender}">  
+                                <f:selectItem itemLabel="Male" itemValue="True" />  
+                                <f:selectItem itemLabel="Female" itemValue="False" />  
+                            </p:selectOneRadio>
+                            <h:outputLabel value="Description" for="description" />
+                            <h:inputTextarea id="description" value="#{userAccountController.personDescription}"
+                                             title="Additional health conditions, remarks, deseases" rows="1" />
+                        </h:panelGrid>
+                        </div>
+                        <br />
+                        <h:panelGroup id="messagePanel" layout="block">
+                            <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                        </h:panelGroup>
+                        <br />
+                        <h:commandButton action="#{userAccountController.register}" value="Register" class="btnBlue" />
+                    </h:form>
+                </div>
+            </div>              
+        </ui:define>
+    </ui:composition>
+</html>

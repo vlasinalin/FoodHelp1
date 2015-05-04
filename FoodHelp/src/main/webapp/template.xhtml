@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title><ui:insert name="title"></ui:insert></title>
+        <ui:insert name="head"></ui:insert>
+        <h:outputStylesheet name="css/divTable.css"/>
+        <h:outputStylesheet name="css/template.css"/>
+        <h:outputStylesheet name="css/jsfcrud.css"/>
+        <h:outputStylesheet name="css/meal.css"/>
+        <h:outputStylesheet name="css/food.css"/>
+        
+    </h:head>
+
+    <h:body>
+        <div class="divHeader divTable">
+            <div class="divColumn" style="width:70px; height:100%;">                
+            </div>
+            <div class="divColumn divLogo" style="width:120px; height:100%;">
+                <h:link outcome="/index" value="foodhelp" class="logo"/>
+            </div>
+            <div class="divColumn" style="width:70px; height:100%;">                
+            </div>
+            <div class="divColumn" style="min-width:600px; height:100%;">
+                <h:form>
+                    <h:link outcome="/foodDescription/List" value="All foods" class="lnkWhite"/> 
+                    
+                    <h:panelGroup rendered="#{userAccountController.request.isUserInRole('USER')}">
+                        &nbsp; | &nbsp;
+                        <h:link outcome="/person/Edit" value="My profile" class="lnkWhite"/>
+                        &nbsp; | &nbsp;
+                        <h:link outcome="/meal/List" value="My dishes" class="lnkWhite"/>
+                        &nbsp; | &nbsp;
+                        <h:link outcome="/person/View" value="Nutrition status" class="lnkWhite"/>
+                        &nbsp; | &nbsp;
+                        <h:link outcome="/meal/CreateMeal" value="Create meal" class="lnkWhite"/>
+                        &nbsp; | &nbsp;
+                        <h:link outcome="/meal/GenerateRecipe" value="Generate recipe" class="lnkWhite"/>
+                    </h:panelGroup>
+                    <h:panelGroup rendered="#{userAccountController.request.isUserInRole('NUTRITIONIST')}">
+                        &nbsp; | &nbsp;
+                        <h:link outcome="/person/List" value="Assigned Patients" class="lnkWhite"/>
+
+                        &nbsp; &nbsp; &nbsp; &nbsp;
+                        <p:menuButton value="#{personController.selected.fullName}" rendered="#{personController.selected != null}">  
+                            <p:menuitem url="/app/person/Edit.xhtml" value="Profile" /> 
+                            <p:menuitem url="/app/meal/List.xhtml" value="Tracked dishes" />
+                            <p:menuitem url="/app/person/View.xhtml" value="Nutrition status" />
+                            <p:menuitem url="/app/meal/CreateMeal.xhtml" value="Create meal" />
+                            <p:menuitem url="/app/meal/GenerateRecipe.xhtml" value="Generate recipe" /> 
+                        </p:menuButton>
+
+                    </h:panelGroup>
+                                  
+                </h:form>
+            </div>          
+            <div class="divUserAccount divColumn" style="width:190px; height:100%; float:right;">
+                <h:panelGroup rendered="#{userAccountController.selected.userAccountId != null}">
+                    <h:form>
+                        <h:outputLabel value="#{userAccountController.selected.username}" class="lnkWhite" />
+                        &nbsp; | &nbsp; 
+                        <h:commandLink action="#{userAccountController.logout}" value="Logout" class="lnkWhite" />
+                    </h:form>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{userAccountController.selected.userAccountId == null}">
+                    <h:link outcome="/login" value="Login" class="lnkWhite"/>
+                    &nbsp; | &nbsp;     
+                    <h:link outcome="/register" value="Register" class="lnkWhite"/>
+                </h:panelGroup>
+            </div>
+        </div>
+        
+        <br /><br /><br /><br />
+        
+        <div class="divTable divMain">
+            <div class="divColumn" style="width:5%;min-height:500px;">
+            </div>
+            
+            <div class="divColumn" style="width:90%;min-height:500px;">
+                <p>
+                    <ui:insert name="body">Default Body</ui:insert>
+                </p>
+                <br />
+                <div style="text-align: center; font-size: 10px; font-family: Tahoma; margin:10px 0px;">
+                    &#169; foodhelp - 2013 - All rights reserved
+                </div>
+            </div>
+            
+            <div class="divColumn" style="width:5%;min-height:500px;">
+            </div>
+        </div>
+    </h:body>
+
+</html>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateFoodDescriptionTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2" columnClasses="inputLabel, inputField">
+                    <h:outputLabel value="Food Group" for="fdGrpCd" />
+                    <h:selectOneMenu id="fdGrpCd" value="#{foodDescriptionController.selected.foodGroup}" 
+                                     title="#{bundle.CreateFoodDescriptionTitle_fdGrpCd}" >
+                        <f:selectItems value="#{foodGroupController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    
+                    <h:outputLabel value="#{bundle.CreateFoodDescriptionLabel_longDesc}" for="longDesc" />
+                    <h:inputText id="longDesc" value="#{foodDescriptionController.selected.longDesc}" 
+                                 title="#{bundle.CreateFoodDescriptionTitle_longDesc}" />
+                    <h:outputLabel value="#{bundle.CreateFoodDescriptionLabel_shrtDesc}" for="shrtDesc" />
+                    <h:inputText id="shrtDesc" value="#{foodDescriptionController.selected.shrtDesc}" 
+                                 title="#{bundle.CreateFoodDescriptionTitle_shrtDesc}" />  
+                </h:panelGrid>
+                <br />
+                <h:panelGrid columns="2">
+                    <h:panelGrid columns="2" width="400px;" columnClasses="inputLabel, inputField">
+                        <h:outputLabel value="#{bundle.CreateFoodInfoLabel_waterg}" for="waterg" />
+                        <h:inputText id="waterg" value="#{foodDescriptionController.selected.foodInfo.waterg}" />
+                        <h:outputLabel value="#{bundle.CreateFoodInfoLabel_energKcal}" for="energKcal" />
+                        <h:inputText id="energKcal" value="#{foodDescriptionController.selected.foodInfo.energKcal}"  />
+                        <h:outputLabel value="#{bundle.CreateFoodInfoLabel_proteing}" for="proteing" />
+                        <h:inputText id="proteing" value="#{foodDescriptionController.selected.foodInfo.proteing}"/>
+                        <h:outputLabel value="#{bundle.CreateFoodInfoLabel_lipidTotg}" for="lipidTotg" />
+                        <h:inputText id="lipidTotg" value="#{foodDescriptionController.selected.foodInfo.lipidTotg}"  />
+                        <h:outputLabel value="#{bundle.CreateFoodInfoLabel_carbohydrtg}" for="carbohydrtg" />
+                        <h:inputText id="carbohydrtg" value="#{foodDescriptionController.selected.foodInfo.carbohydrtg}" />
+                        <h:outputLabel value="#{bundle.CreateFoodInfoLabel_fiberTDg}" for="fiberTDg" />
+                        <h:inputText id="fiberTDg" value="#{foodDescriptionController.selected.foodInfo.fiberTDg}" />
+                        <h:outputLabel value="#{bundle.CreateFoodInfoLabel_sugarTotg}" for="sugarTotg" />
+                        <h:inputText id="sugarTotg" value="#{foodDescriptionController.selected.foodInfo.sugarTotg}" />
+                        <h:outputLabel value="#{bundle.CreateFoodInfoLabel_calciummg}" for="calciummg" />
+                        <h:inputText id="calciummg" value="#{foodDescriptionController.selected.foodInfo.calciummg}" />
+                        <h:outputLabel value="#{bundle.CreateFoodInfoLabel_ironmg}" for="ironmg" />
+                        <h:inputText id="ironmg" value="#{foodDescriptionController.selected.foodInfo.ironmg}" />
+                        <h:outputLabel value="#{bundle.CreateFoodInfoLabel_magnesiummg}" for="magnesiummg" />
+                        <h:inputText id="magnesiummg" value="#{foodDescriptionController.selected.foodInfo.magnesiummg}" />
+                        <h:outputLabel value="#{bundle.CreateFoodInfoLabel_phosphorusmg}" for="phosphorusmg" />
+                        <h:inputText id="phosphorusmg" value="#{foodDescriptionController.selected.foodInfo.phosphorusmg}" />
+                        <h:outputLabel value="#{bundle.CreateFoodInfoLabel_potassiummg}" for="potassiummg" />
+                        <h:inputText id="potassiummg" value="#{foodDescriptionController.selected.foodInfo.potassiummg}" />
+                        <h:outputLabel value="#{bundle.CreateFoodInfoLabel_sodiummg}" for="sodiummg" />
+                        <h:inputText id="sodiummg" value="#{foodDescriptionController.selected.foodInfo.sodiummg}" />
+                        <h:outputLabel value="#{bundle.CreateFoodInfoLabel_zincmg}" for="zincmg" />
+                        <h:inputText id="zincmg" value="#{foodDescriptionController.selected.foodInfo.zincmg}" />
+                        <h:outputLabel value="#{bundle.CreateFoodInfoLabel_coppermg}" for="coppermg" />
+                        <h:inputText id="coppermg" value="#{foodDescriptionController.selected.foodInfo.coppermg}" />
+                        <h:outputLabel value="#{bundle.CreateFoodInfoLabel_manganesemg}" for="manganesemg" />
+                        <h:inputText id="manganesemg" value="#{foodDescriptionController.selected.foodInfo.manganesemg}"  />
+                        <h:outputLabel value="#{bundle.CreateFoodInfoLabel_seleniumug}" for="seleniumug" />
+                        <h:inputText id="seleniumug" value="#{foodDescriptionController.selected.foodInfo.seleniumug}" />
+                    </h:panelGrid>
+                    <h:panelGrid columns="2" width="400px;" columnClasses="inputLabel, inputField">          
+                        <h:outputLabel value="#{bundle.CreateFoodInfoLabel_vitCmg}" for="vitCmg" />
+                        <h:inputText id="vitCmg" value="#{foodDescriptionController.selected.foodInfo.vitCmg}" />
+                        <h:outputLabel value="#{bundle.CreateFoodInfoLabel_thiaminmg}" for="thiaminmg" />
+                        <h:inputText id="thiaminmg" value="#{foodDescriptionController.selected.foodInfo.thiaminmg}" />
+                        <h:outputLabel value="#{bundle.CreateFoodInfoLabel_riboflavinmg}" for="riboflavinmg" />
+                        <h:inputText id="riboflavinmg" value="#{foodDescriptionController.selected.foodInfo.riboflavinmg}" />
+                        <h:outputLabel value="#{bundle.CreateFoodInfoLabel_niacinmg}" for="niacinmg" />
+                        <h:inputText id="niacinmg" value="#{foodDescriptionController.selected.foodInfo.niacinmg}" />
+                        <h:outputLabel value="#{bundle.CreateFoodInfoLabel_pantoAcidmg}" for="pantoAcidmg" />
+                        <h:inputText id="pantoAcidmg" value="#{foodDescriptionController.selected.foodInfo.pantoAcidmg}" />
+                        <h:outputLabel value="#{bundle.CreateFoodInfoLabel_vitB6mg}" for="vitB6mg" />
+                        <h:inputText id="vitB6mg" value="#{foodDescriptionController.selected.foodInfo.vitB6mg}" />
+                        <h:outputLabel value="#{bundle.CreateFoodInfoLabel_folateTotug}" for="folateTotug" />
+                        <h:inputText id="folateTotug" value="#{foodDescriptionController.selected.foodInfo.folateTotug}" />
+                        <h:outputLabel value="#{bundle.CreateFoodInfoLabel_cholineTotmg}" for="cholineTotmg" />
+                        <h:inputText id="cholineTotmg" value="#{foodDescriptionController.selected.foodInfo.cholineTotmg}" />
+                        <h:outputLabel value="#{bundle.CreateFoodInfoLabel_vitB12ug}" for="vitB12ug" />
+                        <h:inputText id="vitB12ug" value="#{foodDescriptionController.selected.foodInfo.vitB12ug}" />
+                        <h:outputLabel value="#{bundle.CreateFoodInfoLabel_vitAIU}" for="vitAIU" />
+                        <h:inputText id="vitAIU" value="#{foodDescriptionController.selected.foodInfo.vitAIU}" />
+                        <h:outputLabel value="#{bundle.CreateFoodInfoLabel_vitEmg}" for="vitEmg" />
+                        <h:inputText id="vitEmg" value="#{foodDescriptionController.selected.foodInfo.vitEmg}" />
+                        <h:outputLabel value="#{bundle.CreateFoodInfoLabel_vitDug}" for="vitDug" />
+                        <h:inputText id="vitDug" value="#{foodDescriptionController.selected.foodInfo.vitDug}" />
+                        <h:outputLabel value="#{bundle.CreateFoodInfoLabel_vitKug}" for="vitKug" />
+                        <h:inputText id="vitKug" value="#{foodDescriptionController.selected.foodInfo.vitKug}" />
+                        <h:outputLabel value="#{bundle.CreateFoodInfoLabel_FASatg}" for="FASatg" />
+                        <h:inputText id="FASatg" value="#{foodDescriptionController.selected.foodInfo.FASatg}" />
+                        <h:outputLabel value="#{bundle.CreateFoodInfoLabel_FAMonog}" for="FAMonog" />
+                        <h:inputText id="FAMonog" value="#{foodDescriptionController.selected.foodInfo.FAMonog}" />
+                        <h:outputLabel value="#{bundle.CreateFoodInfoLabel_FAPolyg}" for="FAPolyg" />
+                        <h:inputText id="FAPolyg" value="#{foodDescriptionController.selected.foodInfo.FAPolyg}" />
+                        <h:outputLabel value="#{bundle.CreateFoodInfoLabel_cholestrlmg}" for="cholestrlmg" />
+                        <h:inputText id="cholestrlmg" value="#{foodDescriptionController.selected.foodInfo.cholestrlmg}" />
+                    </h:panelGrid>
+                </h:panelGrid>
+                <br />
+                <h:commandButton action="#{foodDescriptionController.create}" value="Save" class="btnBlue" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

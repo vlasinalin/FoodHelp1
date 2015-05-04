@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListPersonTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListPersonEmpty}" rendered="#{personController.items.rowCount == 0}"/>
+               
+                <p:dataTable id="dataTable" var="person" value="#{personController.items}" widgetVar="personsTable"  
+                             emptyMessage="No patients found"
+                             paginator="true" paginatorPosition="bottom" rows="15" rowsPerPageTemplate="15,50"
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowKey="#{person.userAccountId}" selection="#{personController.selected}" selectionMode="single" 
+                             style="width:300px">  
+
+                    <p:column id="col1" style="min-width: 600px;"   
+                              headerText="Patient name" >  
+                        <h:outputText value="#{person.fullName}" />  
+                    </p:column>
+
+                </p:dataTable>  
+                <br />
+                <p:commandButton id="btnSelect" icon="ui-icon-search" action="#{personController.prepareView}" value="Select Patient"/>
+                   
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

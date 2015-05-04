@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Tracked dishes"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                
+                <h:panelGrid columns="2" columnClasses="inputLabel, inputField">
+                    
+                    <h:outputLabel value="#{bundle.CreateMealLabel_mealQuantity}" for="mealQuantity" />
+                    <p:inputText id="mealQty" value="#{mealController.selectedMeal.mealQuantity}" 
+                                 required="true" 
+                                 requiredMessage="#{bundle.CreateMealRequiredMessage_mealQuantity}" 
+                                 maxlength="4" />
+
+                    <h:outputLabel value="#{bundle.CreateMealLabel_mealDate}" for="mealDate" />
+                    <p:calendar value="#{mealController.selectedMeal.mealDate}" id="mealDate" showOn="button"
+                                required="true" pattern="dd-MM-yyyy"
+                                requiredMessage="#{bundle.CreateMealRequiredMessage_mealDate}" styleClass="dateInput"/>                      
+                    
+                    <h:outputLabel value="Food:" for="acPojo" />
+                    <p:autoComplete id="acPojo" value="#{mealController.selectedMeal.foodInfo}" completeMethod="#{mealController.completeFoods}"
+                                    var="food" itemLabel="#{food.foodDescription.longDesc}" itemValue="#{food}" forceSelection="true" 
+                                    minQueryLength="3" size="70" 
+                                    required="true" requiredMessage="Please select a food" />
+
+                </h:panelGrid>
+                
+                <br />
+                <h:commandButton action="#{mealController.create}" value="Save dish" class="btnBlue" />
+                <br />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

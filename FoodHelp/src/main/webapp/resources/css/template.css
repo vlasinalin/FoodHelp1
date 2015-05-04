@@ -1,0 +1,97 @@
+.divMain {
+    background-color: #fdfdfe;
+}
+.divHeader {
+    position: fixed;
+    top:0px;
+    height: 40px;
+    background-color: #4a5c99;
+    border-bottom: 1px solid #2a3c89;
+    box-shadow: 0 0 3px rgba(0,0,0,0.5);
+    color:#d8d8f2;
+    z-index: 9000;
+}
+.btnLnkGreen {
+    display:inline-block;
+    height: 30px;
+    line-height: 30px;
+    width: 100px;
+    color: #222;
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px;
+    border: 1px solid #aaaaaa;
+    font-weight: bold;
+    color:#222222;
+    cursor: pointer;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    background-color: #99ddaa;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+}
+.btnLnkGreen:hover {
+    background-color: #8acd9b;
+}
+.btnLnkGreen:active {
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2) inset;
+}
+.divLogo a {
+    display: inline-block;
+    color:#fefefe;
+    font-family: Tahoma;
+    font-size: 23px;
+    font-weight: bold;
+    text-decoration: none;
+    height:100%;
+    line-height: 45px;   
+    text-shadow: 0 0 4px #2a3c89;
+}
+.divLogo {
+    text-align: center;
+}
+.divLogo:hover {
+    background-color: #3a4c89;
+}
+.lnkWhite {
+    display: inline-block;
+    min-width: 75px;
+    color:#d8d8f2;
+    font-family: arial;
+    font-size: 13px;
+    font-weight: bold;
+    text-decoration: none;
+    height:100%;
+    line-height: 46px;
+    text-shadow: 0 0 2px #2a3c89;
+    text-align: center; 
+}
+.lnkWhite:hover {
+    color:#fefefe;
+}
+.divUserAccount {
+    border-left: 1px solid #2a3c89;   
+}
+.divLogin {
+    width:400px; 
+    display:inline-block; 
+    text-align:left;
+    border: 1px solid #4a5c99;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    border-radius:5px;
+    background-color: white;
+    min-height: 250px;
+    padding:40px 50px;
+}
+
+.lblTitle {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.lblHeader {
+    font-size: 18px;
+}
+
+.autoComplete input {
+    padding: 7px;
+}

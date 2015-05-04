@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditPersonTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2" class="tableProfile">
+                    <h:panelGrid>
+                        <h:outputLabel value="Personal information" class="lblHeader" />
+                        <br />
+                        <h:panelGrid columns="2" columnClasses="inputLabel,inputText">
+                            <h:outputLabel value="#{bundle.EditPersonLabel_fullName}" for="fullName" />
+                            <h:inputText id="fullName" value="#{personController.selected.fullName}" title="#{bundle.EditPersonTitle_fullName}" 
+                                         required="true" requiredMessage="#{bundle.EditPersonRequiredMessage_fullName}" style="width:100%;" />
+                            <h:outputLabel value="Age" for="age" />
+                            <h:inputText id="age" value="#{personController.selected.age}"
+                                         required="true" requiredMessage="Age is required" style="width:100%;" />
+                            <h:outputLabel value="Gender" for="gender" />
+                            <p:selectOneRadio id="options" value="#{personController.selected.gender}">  
+                                <f:selectItem itemLabel="Male" itemValue="True" />  
+                                <f:selectItem itemLabel="Female" itemValue="False" />  
+                            </p:selectOneRadio>
+                            <h:outputLabel value="Description" for="description" />
+                            <h:inputTextarea id="description" value="#{personController.selected.description}"
+                                         title="Additional health conditions, remarks, deseases" 
+                                         style="width:100%;" />
+                        </h:panelGrid>
+                        <br />
+                        <br />
+                        <h:outputLabel value="Nutrition information" class="lblHeader" />
+                        <br />
+                        <h:panelGrid columns="2" columnClasses="inputLabel,inputText">
+                            <h:outputLabel value="RDA" for="rda" />
+                            <h:selectOneMenu id="rda" value="#{personController.selected.rdaFoodInfo}" style="width:100%;"
+                                             title="Person RDA" required="true" requiredMessage="RDA is required" >
+                                <f:selectItems value="#{foodInfoController.itemsRdaSelectOne}"/>
+                            </h:selectOneMenu>
+                            <h:outputLabel value="Nutritionist:" for="nutritionist" />
+                            <h:selectOneMenu id="nutritionist" value="#{personController.selected.nutritionist}" style="width:100%;" 
+                                             title="Nutritionist">
+                                <f:selectItems value="#{nutritionistController.itemsAvailableSelectOne}"/>
+                            </h:selectOneMenu>
+                        </h:panelGrid>
+                        <br /><br /><br />
+                        <h:commandButton action="#{personController.update}" value="Save" class="btnBlue"/>
+                    </h:panelGrid>
+                    <h:panelGrid class="pickListContainer">
+                        <h:outputLabel value="Excluded food groups:" for="exFoodGroups" class="lblHeader" />
+                        <p:pickList id="exFoodGroups" value="#{personController.personFoodGroups}" var="foodGroupVar"  
+                                    itemLabel="#{foodGroupVar.fdGrpDesc}" itemValue="#{foodGroupVar}" 
+                                    converter="pickListFoodGroupConverter" /> 
+                    </h:panelGrid>
+                </h:panelGrid>
+                
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

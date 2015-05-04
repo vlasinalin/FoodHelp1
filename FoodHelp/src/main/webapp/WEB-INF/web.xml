@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+    <context-param>
+        <param-name>javax.faces.PROJECT_STAGE</param-name>
+        <param-value>Development</param-value>
+    </context-param>
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletAdaptor</servlet-name>
+        <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>/app/*</url-pattern>
+    </servlet-mapping>
+    <welcome-file-list>
+        <welcome-file>app/index.xhtml</welcome-file>
+    </welcome-file-list>
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <realm-name>userMgmtJdbcRealm</realm-name>
+        <form-login-config>
+            <form-login-page>/app/login.xhtml</form-login-page>
+            <form-error-page>/app/login.xhtml</form-error-page>
+        </form-login-config>
+    </login-config>
+    <!-- 
+  you could also define a page that is displayed if
+  glassfish determins that an authenticated user is not
+  authorized to access a resource
+  <error-page>
+    <error-code>403</error-code>
+    <location>/not-authorized.html</location>
+  </error-page>
+  -->
+    <security-constraint>
+        <!-- everything below /secure/* and /services/secure/* requires authentication -->
+        <web-resource-collection>
+            <web-resource-name>Secured Content</web-resource-name>
+            <url-pattern>/app/foodDescription/Create.xhtml</url-pattern>
+            <url-pattern>/app/foodDescription/Edit.xhtml</url-pattern>
+            <url-pattern>/app/foodGroup/Create.xhtml</url-pattern>
+            <url-pattern>/app/foodGroup/Edit.xhtml</url-pattern>
+            <url-pattern>/app/nutritionist/Edit.xhtml</url-pattern>
+            <url-pattern>/app/admin/View.xhtml</url-pattern>
+        </web-resource-collection>
+        <!-- only users with at least one of these roles are allowed to access the secured content -->
+        <auth-constraint>
+            <role-name>ADMINISTRATOR</role-name>
+            <role-name>NUTRITIONIST</role-name>
+        </auth-constraint>
+        <!-- we always want https! -->
+        <!--<user-data-constraint>
+      <description>highest supported transport security level</description>
+      <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+    </user-data-constraint>-->
+    </security-constraint>
+    <!-- declare the roles relevant for our webapp -->
+    <security-role>
+        <role-name>ADMINISTRATOR</role-name>
+    </security-role>
+    <security-role>
+        <role-name>NUTRITIONIST</role-name>
+    </security-role>
+    <security-role>
+        <role-name>USER</role-name>
+    </security-role>
+    <security-role>
+        <role-name>DEFAULT</role-name>
+    </security-role>
+    <servlet-mapping>
+        <servlet-name>ServletAdaptor</servlet-name>
+        <url-pattern>/restapi/*</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <!-- on productive systems you might have another value for the timeout -->
+        <session-timeout>60</session-timeout>
+        <!-- 
+       we don't want to use the default name JSESSIONID because this 
+       tells everyone (especially hackers) that our application is based on java 
+    -->
+        <cookie-config>
+            <name>SESSIONID</name>
+        </cookie-config>
+    </session-config>
+    <context-param>
+        <param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
+        <param-value>true</param-value>
+    </context-param>
+</web-app>

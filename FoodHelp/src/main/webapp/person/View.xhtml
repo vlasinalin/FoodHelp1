@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <ui:composition template="/template.xhtml">
+        <ui:define name="head">
+            <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+            <script type="text/javascript" src="../resources/js/chartUtils.js"></script>
+            <script type="text/javascript">
+                
+                var foodAvg;
+                var foodAvgList;
+                var foodRda;
+                var spinDiv;
+                var nutrLabels;
+                var personId = "#{personController.selected.userAccountId}";
+                
+                $(document).ready(function () {
+                    
+                    $("select.selectAnalysisNutrient").change(function() {
+                        drawAreaChart();
+                    });
+                    
+                    $('select.selectAnalysisDate').find(":selected").text("Total average");
+                    
+                    $("select.selectAnalysisDate").change(function() {
+                        var selectedDate = $('select.selectAnalysisDate').find(":selected");
+                        redrawAreaChart(selectedDate);
+                    });
+                    
+                    if (spinDiv == null) {
+                        spinDiv = $('#columnChart_div');
+                        spinDiv.css("background-color", "#fff");
+                        spinDiv.css("background-image", "url(../resources/images/throbber.gif)");
+                        spinDiv.css("background-repeat", "no-repeat");
+                        spinDiv.css("background-position", "center");
+                    }
+                   
+                });
+                
+                google.load("visualization", "1", {packages:["corechart"]});
+                google.setOnLoadCallback(obtainFoodAvgArray(personId));
+                google.setOnLoadCallback(obtainRDA(personId));
+                google.setOnLoadCallback(obtainNutrLabels());
+                
+                function success_obtainRDA(msg) {
+                    foodRda = msg.nutrTotal;
+                }
+                
+                function success_obtainNutrLabels(msg) {
+                    nutrLabels = msg.nutrient;
+                }
+                
+                //<![CDATA[
+                function drawAreaChart() {
+                    var nutrIndex = $("select.selectAnalysisNutrient option:selected").val();
+                    var nutrLabel = $("select.selectAnalysisNutrient option:selected").text();
+                    var arr = [];
+                    var columns = ['Date', nutrLabel];
+                    arr.push(columns);
+                    var size = foodAvgList.length;
+                    for (var i=0; i<size; i++) {
+                        var date = foodAvgList[size-i-1].recommDate;
+                        if (date != null) {
+                            var obj = [
+                                date.substr(0,10), 
+                                parseFloat(foodAvgList[size-i-1].nutrTotal[nutrIndex]) ];
+                            arr.push(obj);
+                        }
+                    }
+                    var data = google.visualization.arrayToDataTable(arr);
+
+                    var options = {
+                      title: 'Statistics per nutrient',
+                      hAxis: { textStyle: {fontSize: 12}},
+                      vAxis: {maxValue: 200, minValue: 0, format:"#'%'", textStyle: {fontSize: 12}},
+                      height: 300,
+                      chartArea:{left:60,top:50,width:"90%",height:"60%"},
+                      legend: {position: 'top', textStyle: {color: 'black', fontSize: 12}}
+                    };
+
+                    var areaChart = new google.visualization.AreaChart(document.getElementById('areaChart_div'));
+                    areaChart.draw(data, options);
+                }
+                
+                function obtainFoodAvgArray() {
+                    $.ajax(
+                    {
+                        type: "GET",
+                        url: "http://localhost:8080/FoodHelp/webresources/foodRecommendation/getFoodAvgArray/" + personId,
+                        dataType: 'json',
+                        success: function (msg) {
+                            spinDiv = $('#columnChart_div');
+                            spinDiv.css("background-image", "none");
+                            foodAvgList = msg.foodRecommendation;
+                            foodAvg = getFoodAvg();
+                            drawChart();
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            alert("getFoodAvgList error: " + textStatus + " " + errorThrown + " " + XMLHttpRequest);
+                        }
+                    });
+                }
+                
+                function getFoodAvg() {
+                    var size = foodAvgList.length;
+                    for (var i=0; i!=size; i++) {
+                        if (foodAvgList[i].recommDate == null) {
+                            return foodAvgList[i];
+                        }
+                    }
+                }
+                
+                function drawChart() {                    
+                    var chartTitle = 'Statistics for all nutrients';
+                    var divId = 'columnChart_div';
+                    var nutrTotal = foodAvg.nutrTotal;
+                    drawComboChart(nutrLabels, nutrTotal, foodRda, chartTitle,  divId);
+                }
+                   
+                function redrawAreaChart(selectedDate) {
+                    var selectedText = selectedDate.text();
+                    var selectedVal = selectedDate.val();
+                    if (selectedVal == "") {
+                        foodAvg = getFoodAvg();
+                        drawChart();
+                        return;
+                    }
+                    var date = new Date(selectedText);                
+                    var size = foodAvgList.length;
+                    for (var i=0; i<size; i++) {
+                        var dateString1 = foodAvgList[i].recommDate.substr(0,10);
+                        var date1 = new Date(dateString1);
+                        if (date.getTime() == date1.getTime()) {
+                            foodAvg = foodAvgList[i];
+                            drawChart();
+                            return;
+                        }
+                    }
+                }
+                
+            //]]>
+            </script>
+        </ui:define>
+        
+        <ui:define name="title">
+            <h:outputText value="#{personController.selected.fullName}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <br />
+            <p:tabView id="tabView">  
+                <p:tab id="tab1" title="Nutrition average">  
+                    <div id="columnChart_container">
+                        <h:outputText value="Analysis date" />
+                        &nbsp;
+                        <h:selectOneMenu id="chartDate" class="selectAnalysisDate">
+                            <f:selectItems value="#{personController.mealDatesSelectOne}" />
+                        </h:selectOneMenu>
+                        <br /><br />
+                        <div id="columnChart_div" style="min-width: 1200px; height: 300px; border: 1px solid gray;"></div>
+                    </div>
+                </p:tab>  
+                <p:tab id="tab2" title="Nutrient evolution">  
+                    <div id="areaChart_container">
+                        <h:outputText value="Nutrient to analyse" />
+                        &nbsp;
+                        <h:selectOneMenu id="selectNutr" class="selectAnalysisNutrient">
+                            <f:selectItems value="#{foodInfoController.nutrientsSelectOne}" />
+                        </h:selectOneMenu>
+                        <br /><br />
+                        <div id="areaChart_div" style="min-width: 1200px; height: 300px; border: 1px solid gray;"></div>
+                    </div>  
+                </p:tab>  
+            </p:tabView> 
+
+        </ui:define>
+    </ui:composition>
+</html>

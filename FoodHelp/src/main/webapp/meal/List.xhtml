@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListMealTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                            
+                <p:dataTable id="dataTable" var="meal" value="#{mealController.meals}" widgetVar="mealsTable"  
+                             emptyMessage="No meals found" filteredValue="#{mealController.filteredMeals}"
+                             paginator="true" paginatorPosition="bottom" rows="15" rowsPerPageTemplate="15,50"
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowKey="#{meal.mealId}" selection="#{mealController.selectedMeal}" selectionMode="single"
+                             >  
+
+                    <p:column id="col1" filterBy="#{meal.foodInfo.foodDescription.longDesc}" style="min-width: 600px;"   
+                              headerText="Food description" filterMatchMode="contains">  
+                        <h:outputText value="#{meal.foodInfo.foodDescription.longDesc}" />  
+                    </p:column>
+
+                    <p:column id="col2" style="width: 100px;"  
+                              headerText="Quantity (g)">  
+                        <h:outputText value="#{meal.mealQuantity}" />  
+                    </p:column>  
+
+                    <p:column id="col3" style="width: 100px;" 
+                              headerText="Date">  
+                        <h:outputText value="#{meal.mealDate}" >
+                            <f:convertDateTime pattern="yyyy-MM-dd" />
+                        </h:outputText>
+                    </p:column>  
+
+                </p:dataTable>  
+                
+                <br />
+                <p:commandButton id="addButton" action="#{mealController.prepareCreate}" value="Track new dish" icon="ui-icon-plus" />
+                &nbsp;
+                <p:commandButton id="delButton" value="Remove selected" icon="ui-icon-trash" action="#{mealController.destroy}" /> 
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

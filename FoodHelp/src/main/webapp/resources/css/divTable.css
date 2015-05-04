@@ -1,0 +1,19 @@
+
+.divTable {
+    width: 100%;
+    display:block;
+}
+.divRow {
+    width: 99%; 
+    display:block;
+}
+.divColumn {
+    float: left;
+    display:block;
+}
+.alignLeft {
+    text-align:left;
+}
+.divHeight {
+    min-height:600px;
+}

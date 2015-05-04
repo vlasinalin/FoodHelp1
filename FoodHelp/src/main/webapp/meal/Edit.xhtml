@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditMealTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditMealLabel_mealQuantity}" for="mealQuantity" />
+                    <h:inputText id="mealQuantity" value="#{mealController.selected.mealQuantity}" title="#{bundle.EditMealTitle_mealQuantity}" required="true" requiredMessage="#{bundle.EditMealRequiredMessage_mealQuantity}"/>
+                    <h:outputLabel value="#{bundle.EditMealLabel_mealDate}" for="mealDate" />
+                    <h:inputText id="mealDate" value="#{mealController.selected.mealDate}" title="#{bundle.EditMealTitle_mealDate}" required="true" requiredMessage="#{bundle.EditMealRequiredMessage_mealDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.EditMealLabel_NDBNo}" for="NDBNo" />
+                    <h:selectOneMenu id="NDBNo" value="#{mealController.selected.foodInfo}" title="#{bundle.EditMealTitle_NDBNo}" required="true" requiredMessage="#{bundle.EditMealRequiredMessage_NDBNo}">
+                        <f:selectItems value="#{foodInfoController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditMealLabel_userAccountId}" for="userAccountId" />
+                    <h:selectOneMenu id="userAccountId" value="#{mealController.selected.person}" title="#{bundle.EditMealTitle_userAccountId}" required="true" requiredMessage="#{bundle.EditMealRequiredMessage_userAccountId}">
+                        <f:selectItems value="#{personController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="#{mealController.update}" value="#{bundle.EditMealSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditMealViewLink}"/>
+                <br />
+                <h:commandLink action="#{mealController.prepareList}" value="#{bundle.EditMealShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditMealIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

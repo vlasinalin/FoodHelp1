@@ -1,0 +1,154 @@
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #3a4f54;
+    background-color: #f1f2f8;
+    font-size: small;
+    margin:0px;
+}
+
+button, input, select {
+   font-family: Arial, Helvetica, sans-serif; 
+}
+
+.basicInput {
+    color: black;
+    background-image: none;
+    background-color: white;
+    box-shadow: none !important;
+    border:1px solid gray;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -mox-border-radius: 2px;
+    font-weight: bold;
+    padding: 2px;
+    margin:auto;
+    font-size: 14px;
+    outline: none;
+}
+
+a {
+    color: #e33b06;
+}
+
+table {
+    empty-cells: show;
+}
+
+.tableCrud {
+    border: 1px solid #ababab;
+}
+.jsfcrud_list_form tfoot, tfoot td button {
+    height: 22px;
+    vertical-align: bottom;
+}
+.jsfcrud_list_form tfoot, tfoot td { 
+    border-top: 1px solid #ababab;
+    background-image: linear-gradient(top, #f2f2f2, #d3d1d1);
+    background-image: -webkit-linear-gradient(top, #f2f2f2, #d3d1d1);
+    background-image: -moz-linear-gradient(top, #f2f2f2, #d3d1d1);
+    
+}
+
+.jsfcrud_list_form th, td th {
+    font-size: 14px;
+    color: #3f3f3f;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+    border:none;
+    border-bottom: 1px solid #ababab;
+    text-align: left;
+    padding: 8px;
+    background-image: linear-gradient(top, #f2f2f2, #d3d1d1);
+    background-image: -webkit-linear-gradient(top, #f2f2f2, #d3d1d1);
+    background-image: -moz-linear-gradient(top, #f2f2f2, #d3d1d1);
+}
+
+.jsfcrud_list_form td {
+    border:none;
+    vertical-align: baseline;
+    padding: 6px;
+}
+
+tr.jsfcrud_odd_row {
+    background-color: #fefeff;
+    color: #4e6a71;
+}
+
+tr.jsfcrud_even_row {
+    background-color: #fefeff;
+    color: #4e6a71;
+}
+
+#busyImage {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+}
+.inputField {
+    width: 300px;
+}
+.dateInput input, .mealSearchInput {
+    width:70% !important;
+    margin-right: 10px;
+}
+.dateInput button {
+    height: 29px;
+}
+.homeMenuLink {
+    display:block;
+    height: 120px;
+    line-height: 120px;
+    width: 180px;
+    color: black;
+    text-align: center;
+    background-color: orange;
+    margin: 10px;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.btnGray
+{
+    border: 1px solid #aaaaaa;
+    font-weight: bold;
+    color:#222222;
+    cursor: pointer;
+    vertical-align:middle;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    background-color: #99aaff;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+}
+.btnGray:hover
+{
+    color:#000000;
+    border-color: #888888;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+    background-color: #8899ff;
+}
+.btnGray:active
+{
+    color:#000000;
+    border-color: #888888;
+    box-shadow: 0 0 5px #7788dd inset;
+    background-color: #8899ee;
+}
+.inputLabel {
+    width: 120px;
+}
+.inputText {
+    width: 200px;
+}
+
+.pickListContainer {
+    margin-left: 100px;
+    font-size: 11px;
+}
+.pickListContainer .ui-picklist-source,
+.pickListContainer .ui-picklist-target { 
+   width: 250px !important;
+   height: 510px !important;
+}
+.tableProfile td {
+    vertical-align: top;
+}

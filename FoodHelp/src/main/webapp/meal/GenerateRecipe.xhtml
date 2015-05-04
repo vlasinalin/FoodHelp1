@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <ui:composition template="/template.xhtml">
+        <ui:define name="head">
+            <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+            <script type="text/javascript" src="../resources/js/chartUtils.js"></script>
+            <script type="text/javascript">
+                var spinDiv;
+                var foodRecomm;
+                var nutrLabels;
+                var foodRda;
+                var personId = "#{personController.selected.userAccountId}";
+                
+                google.load("visualization", "1", {packages:["corechart"]});
+                google.setOnLoadCallback(obtainFoodRecommendation());
+                google.setOnLoadCallback(obtainRDA(personId));
+                google.setOnLoadCallback(obtainNutrLabels());
+                
+                function success_obtainRDA(msg) {
+                    foodRda = msg.nutrTotal;
+                }
+                
+                function success_obtainNutrLabels(msg) {
+                    nutrLabels = msg.nutrient;
+                }
+                
+                function drawChart() {                    
+                    var chartTitle = 'Nutrition average for next day recommended meals';
+                    var divId = 'chart_div_recomm';
+                    var nutrTotal = foodRecomm.nutrTotal;
+                    drawComboChart(nutrLabels, nutrTotal, foodRda, chartTitle,  divId);
+                }
+                
+                //<![CDATA[
+                function generateTable() {
+                    var $table = $('<table>');
+                    $table
+                    .append('<thead>').children('thead')
+                    .append('<tr />').children('tr').append('<th>Food</th><th>Food group</th><th>Quantity</th>');
+                    var $tbody = $table.append('<tbody />').children('tbody');
+                    var foodsList = foodRecomm.foodsList;
+                    var size = foodsList.length;
+                    for (var i=0; i<size; i++) {
+                        $tbody.append('<tr />').children('tr:last')
+                        .append("<td>" + foodsList[i].longDesc + "</td>")
+                        .append("<td>" + foodsList[i].foodgroupDesc + "</td>")
+                        .append("<td>" + parseInt(foodsList[i].quantity, 10) + "</td>");
+                    }
+                    $table.appendTo('#divTable');
+                    $table.addClass('tableCrud');
+                    $table.css('border-spacing', '0');
+                    $table.css('width', '100%');
+                }
+                //]]>
+                
+                function obtainFoodRecommendation() {
+                    $.ajax(
+                    {
+                        type: "GET",
+                        url: "http://localhost:8080/FoodHelp/webresources/foodRecommendation/getFoodRecommendation/" + personId,
+                        dataType: 'json',
+                        success: success_obtainFoodRecommendation,
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            alert("getFoodRecomm error: " + textStatus + " " + errorThrown + " " + XMLHttpRequest);
+                        }
+                    });
+                }
+                
+                function success_obtainFoodRecommendation(msg) {
+                    spinDiv = $('#chart_div_recomm');
+                    spinDiv.css("background-image", "none");
+                    foodRecomm = msg;
+                    drawChart();
+                    generateTable();
+                    $("#divCommand").show();
+                }
+                
+                function saveFoodRecommendation() {
+                    //alert(JSON.stringify(foodRecomm));
+                    //return;
+                    $.ajax(
+                    {
+                        type: "POST",
+                        headers: { 
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json' 
+                        },
+                        url: "http://localhost:8080/FoodHelp/webresources/foodRecommendation/saveFoodRecommendation",
+                        dataType: 'json',
+                        data: JSON.stringify(foodRecomm),
+                        success: function (msg) {
+                            if (confirm("Recommended foods saved successfull")) {
+                                redirectToNutritionStatus();
+                            }
+                            else {
+                                redirectToNutritionStatus();
+                            }
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            alert("saveFoodRecommendation error: " + textStatus + " " + errorThrown + " " + XMLHttpRequest);
+                        }
+                    });
+                }
+                
+                function redirectToNutritionStatus() {             
+                    window.location.href = "/FoodHelp/app/person/View.xhtml";
+                }
+                
+                $(document).ready(function () {
+                    $("#divCommand").hide();
+               
+                    $("#btnRecommSave").click(function() {
+                        foodRecomm.recommDate = recommDateCalendar.getDate();
+                        saveFoodRecommendation();
+                        
+                    });
+               
+                    if (spinDiv == null) {
+                        spinDiv = $('#chart_div_recomm');
+                        spinDiv.css("background-color", "#fff");
+                        spinDiv.css("background-image", "url(../resources/images/throbber.gif)");
+                        spinDiv.css("background-repeat", "no-repeat");
+                        spinDiv.css("background-position", "center");
+                    }
+                   
+                });
+                
+            </script>
+        </ui:define>
+        <ui:define name="title">
+            <h:outputText value="#{personController.selected.fullName}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:outputText value="Recommended meals for next day"/>
+            <br />
+            <br />
+            <div id="chart_div_recomm" style="min-width: 1200px; height: 300px; border: 1px solid gray;"></div>
+            <br />
+            <br />
+            <div id="divTable" class="jsfcrud_list_form">
+            
+            </div>
+            <br />
+            <div id="divCommand">
+                <h:form>
+                    <h:outputLabel value="Meals date" for="mealDate" /> &nbsp;
+                    <div style="width:200px;">
+                    <p:calendar id="mealDate" showOn="button"
+                                required="true" pattern="dd-MM-yyyy" widgetVar="recommDateCalendar"
+                                requiredMessage="Please select meals date" styleClass="dateInput"/>
+                    </div>
+                    <br />
+                    <input type="button" id="btnRecommSave" value="Save" class="btnBlue" />
+                </h:form>
+            </div>
+        </ui:define>
+    </ui:composition>   
+</html>

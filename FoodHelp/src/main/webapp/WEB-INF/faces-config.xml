@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!-- =========== FULL CONFIGURATION FILE ================================== -->
+
+<faces-config version="2.1"
+    xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd">
+    <application>
+        <navigation-rule>
+            <from-view-id>login.xhtml</from-view-id>
+            <navigation-case>
+                <from-outcome>ViewPerson</from-outcome>
+                <to-view-id>/person/View.xhtml</to-view-id>
+            </navigation-case>
+            <navigation-case>
+                <from-outcome>ViewNutritionist</from-outcome>
+                <to-view-id>/person/List.xhtml</to-view-id>
+            </navigation-case>
+            <navigation-case>
+                <from-outcome>ViewAdmin</from-outcome>
+                <to-view-id>/admin/View.xhtml</to-view-id>
+            </navigation-case>
+        </navigation-rule>
+        <navigation-rule>
+            <from-view-id>register.xhtml</from-view-id>
+            <navigation-case>
+                <from-outcome>ViewPerson</from-outcome>
+                <to-view-id>/person/View.xhtml</to-view-id>
+            </navigation-case>
+            <navigation-case>
+                <from-outcome>ViewNutritionist</from-outcome>
+                <to-view-id>/person/List.xhtml</to-view-id>
+            </navigation-case>
+        </navigation-rule>
+        
+        <resource-bundle>
+            <base-name>/Bundle</base-name>
+            <var>bundle</var>
+        </resource-bundle>
+
+    </application>
+</faces-config>

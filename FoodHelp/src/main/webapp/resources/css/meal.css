@@ -1,0 +1,38 @@
+/* 
+    Document   : meal
+    Created on : Jan 22, 2013, 1:37:57 AM
+    Author     : Alinv
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.btnBlue
+{
+    border: 1px solid #aaaaaa;
+    font-weight: bold;
+    color:#222222;
+    cursor: pointer;
+    width:120px;
+    vertical-align:middle;
+    
+    text-shadow: 0 1px 0 #FFcf77;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    height: 30px;
+    background-color: #99aaff;
+}
+.btnBlue:hover
+{
+    color:#000000;
+    border-color: #888888;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.btnBlue:active
+{
+    color:#000000;
+    border-color: #888888;
+    box-shadow: 0 0 5px #7788dd inset;
+    background-color: #8899ee;
+}
+

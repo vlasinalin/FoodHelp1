@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <ui:composition template="/template.xhtml">
+        <ui:define name="head">
+            <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+            <script type="text/javascript" src="../resources/js/chartUtils.js"></script>
+            <script type="text/javascript">
+                
+                var foodRecomm;
+                var nutrLabels;
+                var foodRda;
+                var personId = "#{personController.selected.userAccountId}";
+                
+                google.load("visualization", "1", {packages:["corechart"]});
+                google.setOnLoadCallback(obtainRDA(personId));
+                google.setOnLoadCallback(obtainNutrLabels());
+                
+                function success_obtainRDA(msg) {
+                    foodRda = msg.nutrTotal;
+                }
+                
+                function success_obtainNutrLabels(msg) {
+                    nutrLabels = msg.nutrient;
+                }
+
+                function saveFoodRecommendation() {
+                    //alert(JSON.stringify(foodRecomm));
+                    //return;
+                    jQuery.ajax({
+                        type: "POST",
+                        headers: { 
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json' 
+                        },
+                        url: "http://localhost:8080/FoodHelp/webresources/foodRecommendation/saveFoodRecommendation",
+                        dataType: 'json',
+                        data: JSON.stringify(foodRecomm),
+                        success: function (msg) {
+                            if (confirm("Recommended foods saved successfull")) {
+                                redirectToNutritionStatus();
+                            }
+                            else {
+                                redirectToNutritionStatus();
+                            }
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            alert("saveFoodRecommendation error: " + textStatus + " " + errorThrown + " " + XMLHttpRequest);
+                        }
+                    });
+                }
+                
+                function redirectToNutritionStatus() {            
+                    window.location.href = "/FoodHelp/app/person/View.xhtml";
+                }
+                
+                function redrawChart() {
+                    setTimeout("drawChart();", 1000);
+                }
+                
+                function drawChart() {
+                    var textRecomm = $(".jsonRecomm").text();
+                    foodRecomm = jQuery.parseJSON(textRecomm);
+                    var chartTitle = 'Nutrients analysis';
+                    var divId = 'divChartRecomm';
+                    var nutrTotal = foodRecomm.nutrTotal;
+                    drawComboChart(nutrLabels, nutrTotal, foodRda, chartTitle,  divId);
+                }
+                
+                //<![CDATA[
+                $(document).ready(function () {
+                    $("#btnRecommSave").click(function() {                     
+                        var date = recommDateCalendar.getDate();
+                        //var dateString = date.toLocaleDateString();
+                        foodRecomm.recommDate = recommDateCalendar.getDate();
+                        saveFoodRecommendation();
+                        
+                    });
+                    var textRecomm = $(".jsonRecomm").text();
+                    if (textRecomm == null || textRecomm.length < 100) {
+                        hideControls();
+                    }
+                    else {
+                        redrawChart();
+                    }
+                });
+                //]]>
+                
+                function hideControls() {
+                    $('#divRecommendation').hide();
+                    $('#divChartRecomm').hide();
+                    $('#divCommand').hide();
+                }
+                
+                function showControls() {
+                    $('#divRecommendation').show();
+                    $('#divChartRecomm').show();
+                    $('#divCommand').show();
+                }
+                
+            </script>
+        </ui:define>
+        <ui:define name="title">
+            <h:outputText value="#{personController.selected.fullName}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:outputText value="Select foods"/>
+            <br />
+            <br />
+            <h:form id="form1" styleClass="jsfcrud_list_form">
+                <p:autoComplete id="acPojo" value="#{mealController.selectedFood}" completeMethod="#{mealController.completeFoods}"
+                                var="food" itemLabel="#{food.foodDescription.longDesc}" itemValue="#{food}" forceSelection="true" 
+                                minQueryLength="3" size="70" styleClass="autoComplete" />
+                &nbsp;
+                <p:commandButton value="Add" update="mealsTable jsonRecomm" 
+                                 actionListener="#{mealController.computeQuantities}" 
+                                 oncomplete="showControls(); redrawChart();" /> 
+                &nbsp;
+                <p:commandButton value="Clear all" action="#{mealController.initFoodRecomm}" 
+                                 update="mealsTable" oncomplete="hideControls();"/> 
+                <br />
+                <br />
+                <div id="divRecommendation">
+                    <h:dataTable value="#{mealController.createdFoodRecomm.foodsList}" id="mealsTable" var="item" border="0" cellpadding="2" cellspacing="0" 
+                                 rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border: 1px solid #ababab; width:100%;">
+                       <h:column>
+                           <f:facet name="header">
+                               <h:outputText value="Food name"/>
+                           </f:facet>
+                           <h:outputText value="#{item.longDesc}"/>
+                        </h:column>
+                        <h:column>
+                           <f:facet name="header">
+                               <h:outputText value="Food group"/>
+                           </f:facet>
+                           <h:outputText value="#{item.foodgroupDesc}"/>
+                        </h:column> 
+                        <h:column>
+                           <f:facet name="header">
+                               <h:outputText value="Food quantity(g)"/>
+                           </f:facet>
+                           <h:outputText value="#{item.dishQuantity}"/>
+                        </h:column> 
+                    </h:dataTable>
+                    <br />
+                    <p:commandButton id="ajaxObtainQuantities" value="Re-compute quantities" 
+                                     update="mealsTable jsonRecomm" 
+                                     actionListener="#{mealController.computeQuantities}" 
+                                     oncomplete="redrawChart();" 
+                                     icon="ui-icon-refresh"/> 
+                    &nbsp;
+                    <p:button icon="ui-icon-refresh" value="Re-draw chart" 
+                              onclick="redrawChart(); return false;" />
+                    <h:outputText id="jsonRecomm" class="jsonRecomm" style="display:none;" value="#{mealController.createdFoodRecommJson}">
+                    </h:outputText>
+                </div>
+            </h:form>
+            
+            <br />
+
+            <div id="divChartRecomm" style="min-width: 1200px; height: 300px; border: 1px solid gray;">
+
+            </div>
+            <br />
+            <br />
+            <div id="divCommand">
+                <h:form>
+                    <h:outputLabel value="Meals date" for="mealDate" /> &nbsp;
+                    <div style="width:200px;">
+                    <p:calendar id="mealDate" showOn="button"
+                                required="true" pattern="dd-MM-yyyy" widgetVar="recommDateCalendar"
+                                requiredMessage="Please select meals date" styleClass="dateInput"/>
+                    </div>
+                    <br />
+                    <input type="button" id="btnRecommSave" value="Save" class="btnBlue" />
+                </h:form>
+            </div>
+            
+        </ui:define>
+    </ui:composition>   
+</html>

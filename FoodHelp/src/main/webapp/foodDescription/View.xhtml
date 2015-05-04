@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{foodDescriptionController.selected.longDesc}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>              
+                <h:panelGrid columns="2" width="600px;">
+                    <h:outputText value="#{bundle.ViewFoodDescriptionLabel_NDBNo}"/>
+                    <h:outputText value="#{foodDescriptionController.selected.NDBNo}" title="#{bundle.ViewFoodDescriptionTitle_NDBNo}"/>
+                    <h:outputText value="#{bundle.ViewFoodDescriptionLabel_longDesc}"/>
+                    <h:outputText value="#{foodDescriptionController.selected.longDesc}" title="#{bundle.ViewFoodDescriptionTitle_longDesc}"/>
+                    <h:outputText value="#{bundle.ViewFoodDescriptionLabel_shrtDesc}"/>
+                    <h:outputText value="#{foodDescriptionController.selected.shrtDesc}" title="#{bundle.ViewFoodDescriptionTitle_shrtDesc}"/>
+                    <h:outputText value="#{bundle.ViewFoodDescriptionLabel_fdGrpCd}"/>
+                    <h:outputText value="#{foodDescriptionController.selected.foodGroup.fdGrpDesc}" title="#{bundle.ViewFoodDescriptionTitle_fdGrpCd}"/>
+                </h:panelGrid>
+                <br />
+                <h:panelGrid columns="2">
+                    <h:panelGrid columns="2" width="300px;">
+                        <h:outputText value="#{bundle.ViewFoodInfoLabel_waterg}"/>
+                        <h:outputText value="#{foodDescriptionController.selected.foodInfo.waterg}" title="#{bundle.ViewFoodInfoTitle_waterg}"/>
+                        <h:outputText value="#{bundle.ViewFoodInfoLabel_energKcal}"/>
+                        <h:outputText value="#{foodDescriptionController.selected.foodInfo.energKcal}" title="#{bundle.ViewFoodInfoTitle_energKcal}"/>
+                        <h:outputText value="#{bundle.ViewFoodInfoLabel_proteing}"/>
+                        <h:outputText value="#{foodDescriptionController.selected.foodInfo.proteing}" title="#{bundle.ViewFoodInfoTitle_proteing}"/>
+                        <h:outputText value="#{bundle.ViewFoodInfoLabel_lipidTotg}"/>
+                        <h:outputText value="#{foodDescriptionController.selected.foodInfo.lipidTotg}" title="#{bundle.ViewFoodInfoTitle_lipidTotg}"/>
+                        <h:outputText value="#{bundle.ViewFoodInfoLabel_carbohydrtg}"/>
+                        <h:outputText value="#{foodDescriptionController.selected.foodInfo.carbohydrtg}" title="#{bundle.ViewFoodInfoTitle_carbohydrtg}"/>
+                        <h:outputText value="#{bundle.ViewFoodInfoLabel_fiberTDg}"/>
+                        <h:outputText value="#{foodDescriptionController.selected.foodInfo.fiberTDg}" title="#{bundle.ViewFoodInfoTitle_fiberTDg}"/>
+                        <h:outputText value="#{bundle.ViewFoodInfoLabel_sugarTotg}"/>
+                        <h:outputText value="#{foodDescriptionController.selected.foodInfo.sugarTotg}" title="#{bundle.ViewFoodInfoTitle_sugarTotg}"/>
+                        <h:outputText value="#{bundle.ViewFoodInfoLabel_calciummg}"/>
+                        <h:outputText value="#{foodDescriptionController.selected.foodInfo.calciummg}" title="#{bundle.ViewFoodInfoTitle_calciummg}"/>
+                        <h:outputText value="#{bundle.ViewFoodInfoLabel_ironmg}"/>
+                        <h:outputText value="#{foodDescriptionController.selected.foodInfo.ironmg}" title="#{bundle.ViewFoodInfoTitle_ironmg}"/>
+                        <h:outputText value="#{bundle.ViewFoodInfoLabel_magnesiummg}"/>
+                        <h:outputText value="#{foodDescriptionController.selected.foodInfo.magnesiummg}" title="#{bundle.ViewFoodInfoTitle_magnesiummg}"/>
+                        <h:outputText value="#{bundle.ViewFoodInfoLabel_phosphorusmg}"/>
+                        <h:outputText value="#{foodDescriptionController.selected.foodInfo.phosphorusmg}" title="#{bundle.ViewFoodInfoTitle_phosphorusmg}"/>
+                        <h:outputText value="#{bundle.ViewFoodInfoLabel_potassiummg}"/>
+                        <h:outputText value="#{foodDescriptionController.selected.foodInfo.potassiummg}" title="#{bundle.ViewFoodInfoTitle_potassiummg}"/>
+                        <h:outputText value="#{bundle.ViewFoodInfoLabel_sodiummg}"/>
+                        <h:outputText value="#{foodDescriptionController.selected.foodInfo.sodiummg}" title="#{bundle.ViewFoodInfoTitle_sodiummg}"/>
+                        <h:outputText value="#{bundle.ViewFoodInfoLabel_zincmg}"/>
+                        <h:outputText value="#{foodDescriptionController.selected.foodInfo.zincmg}" title="#{bundle.ViewFoodInfoTitle_zincmg}"/>
+                        <h:outputText value="#{bundle.ViewFoodInfoLabel_coppermg}"/>
+                        <h:outputText value="#{foodDescriptionController.selected.foodInfo.coppermg}" title="#{bundle.ViewFoodInfoTitle_coppermg}"/>
+                        <h:outputText value="#{bundle.ViewFoodInfoLabel_manganesemg}"/>
+                        <h:outputText value="#{foodDescriptionController.selected.foodInfo.manganesemg}" title="#{bundle.ViewFoodInfoTitle_manganesemg}"/>
+                        <h:outputText value="#{bundle.ViewFoodInfoLabel_seleniumug}"/>
+                        <h:outputText value="#{foodDescriptionController.selected.foodInfo.seleniumug}" title="#{bundle.ViewFoodInfoTitle_seleniumug}"/>
+                        
+                    </h:panelGrid>
+                    <h:panelGrid columns="2" width="300px;">
+                        <h:outputText value="#{bundle.ViewFoodInfoLabel_vitCmg}"/>
+                        <h:outputText value="#{foodDescriptionController.selected.foodInfo.vitCmg}" title="#{bundle.ViewFoodInfoTitle_vitCmg}"/>
+                        <h:outputText value="#{bundle.ViewFoodInfoLabel_thiaminmg}"/>
+                        <h:outputText value="#{foodDescriptionController.selected.foodInfo.thiaminmg}" title="#{bundle.ViewFoodInfoTitle_thiaminmg}"/>
+                        <h:outputText value="#{bundle.ViewFoodInfoLabel_riboflavinmg}"/>
+                        <h:outputText value="#{foodDescriptionController.selected.foodInfo.riboflavinmg}" title="#{bundle.ViewFoodInfoTitle_riboflavinmg}"/>
+                        <h:outputText value="#{bundle.ViewFoodInfoLabel_niacinmg}"/>
+                        <h:outputText value="#{foodDescriptionController.selected.foodInfo.niacinmg}" title="#{bundle.ViewFoodInfoTitle_niacinmg}"/>
+                        <h:outputText value="#{bundle.ViewFoodInfoLabel_pantoAcidmg}"/>
+                        <h:outputText value="#{foodDescriptionController.selected.foodInfo.pantoAcidmg}" title="#{bundle.ViewFoodInfoTitle_pantoAcidmg}"/>
+                        <h:outputText value="#{bundle.ViewFoodInfoLabel_vitB6mg}"/>
+                        <h:outputText value="#{foodDescriptionController.selected.foodInfo.vitB6mg}" title="#{bundle.ViewFoodInfoTitle_vitB6mg}"/>
+                        <h:outputText value="#{bundle.ViewFoodInfoLabel_folateTotug}"/>
+                        <h:outputText value="#{foodDescriptionController.selected.foodInfo.folateTotug}" title="#{bundle.ViewFoodInfoTitle_folateTotug}"/>
+                        <h:outputText value="#{bundle.ViewFoodInfoLabel_cholineTotmg}"/>
+                        <h:outputText value="#{foodDescriptionController.selected.foodInfo.cholineTotmg}" title="#{bundle.ViewFoodInfoTitle_cholineTotmg}"/>
+                        <h:outputText value="#{bundle.ViewFoodInfoLabel_vitB12ug}"/>
+                        <h:outputText value="#{foodDescriptionController.selected.foodInfo.vitB12ug}" title="#{bundle.ViewFoodInfoTitle_vitB12ug}"/>
+                        <h:outputText value="#{bundle.ViewFoodInfoLabel_vitAIU}"/>
+                        <h:outputText value="#{foodDescriptionController.selected.foodInfo.vitAIU}" title="#{bundle.ViewFoodInfoTitle_vitAIU}"/>
+                        <h:outputText value="#{bundle.ViewFoodInfoLabel_vitEmg}"/>
+                        <h:outputText value="#{foodDescriptionController.selected.foodInfo.vitEmg}" title="#{bundle.ViewFoodInfoTitle_vitEmg}"/>
+                        <h:outputText value="#{bundle.ViewFoodInfoLabel_vitDug}"/>
+                        <h:outputText value="#{foodDescriptionController.selected.foodInfo.vitDug}" title="#{bundle.ViewFoodInfoTitle_vitDug}"/>
+                        <h:outputText value="#{bundle.ViewFoodInfoLabel_vitKug}"/>
+                        <h:outputText value="#{foodDescriptionController.selected.foodInfo.vitKug}" title="#{bundle.ViewFoodInfoTitle_vitKug}"/>
+                        <h:outputText value="#{bundle.ViewFoodInfoLabel_FASatg}"/>
+                        <h:outputText value="#{foodDescriptionController.selected.foodInfo.FASatg}" title="#{bundle.ViewFoodInfoTitle_FASatg}"/>
+                        <h:outputText value="#{bundle.ViewFoodInfoLabel_FAMonog}"/>
+                        <h:outputText value="#{foodDescriptionController.selected.foodInfo.FAMonog}" title="#{bundle.ViewFoodInfoTitle_FAMonog}"/>
+                        <h:outputText value="#{bundle.ViewFoodInfoLabel_FAPolyg}"/>
+                        <h:outputText value="#{foodDescriptionController.selected.foodInfo.FAPolyg}" title="#{bundle.ViewFoodInfoTitle_FAPolyg}"/>
+                        <h:outputText value="#{bundle.ViewFoodInfoLabel_cholestrlmg}"/>
+                        <h:outputText value="#{foodDescriptionController.selected.foodInfo.cholestrlmg}" title="#{bundle.ViewFoodInfoTitle_cholestrlmg}"/>     
+                    </h:panelGrid>
+                </h:panelGrid>
+                <h:panelGroup rendered="#{userAccountController.request.isUserInRole('NUTRITIONIST')}">
+                    <p:commandButton id="editButton" value="Edit" icon="ui-icon-gear" action="#{foodDescriptionController.prepareEdit}" /> 
+                    &nbsp;
+                    <p:commandButton id="deleteButton" value="Delete" icon="ui-icon-plus" action="#{foodDescriptionController.destroy}" />                
+                </h:panelGroup>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

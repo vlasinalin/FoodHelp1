@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+
+        </ui:define>
+        <ui:define name="body">
+            <br/>
+            <div style="text-align: center;">
+                <h1>
+                    Welcome to Food Help
+                </h1>
+            </div>
+            <br/>
+            <br/>
+            <div style="text-align: center;">
+                <div style="width:420px; display:inline-block;">
+                    <h:panelGroup rendered="#{userAccountController.request.getUserPrincipal() == null}">
+                        <table>
+                            <tr>
+                                <td>
+                                    <h:link outcome="/login" value="Login" class="homeMenuLink btnGray"/>
+                                </td>
+                                <td>
+                                    <h:link outcome="/register" value="Register" class="homeMenuLink btnGray"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </h:panelGroup>
+                    <h:panelGroup rendered="#{userAccountController.request.isUserInRole('USER')}">
+                        <table>
+                            <tr>
+                                <td>
+                                    <h:link outcome="/person/View" value="My profile" class="homeMenuLink btnGray"/>
+                                </td>
+                                <td>
+                                    <h:link outcome="/meal/List" value="My meals" class="homeMenuLink btnGray"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </h:panelGroup>
+                    <h:panelGroup rendered="#{userAccountController.request.isUserInRole('NUTRITIONIST')}">
+                        <table>
+                            <tr>
+                                <td>
+                                    <h:link outcome="/nutritionist/Edit" value="My profile" class="homeMenuLink btnGray"/>
+                                </td>
+                                <td>
+                                    <h:link outcome="/person/List" value="View all persons" class="homeMenuLink btnGray"/>
+                                </td>
+                            </tr>
+                        </table>         
+                    </h:panelGroup>
+                </div>
+            </div>
+        </ui:define>
+    </ui:composition>
+
+</html>
